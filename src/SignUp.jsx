@@ -4,7 +4,7 @@ import "./signup.css";
 export default function SignUp() {
    
   const [user,setUser] = useState({
-     name:"",roll_no:"",  email:"",phone:"",smester:"",cgpa:"", skill_1:"",skill_2:"",skill_3:"",website:"",education_10th:"",education_12th:"", about:""
+    photo_link:"",name:"",roll_no:"",  email:"",phone:"",smester:"",cgpa:"", skill_1:"",skill_2:"",skill_3:"",website:"",education_10th:"",education_12th:"", about:""
   });
 
   let name ,value;
@@ -20,7 +20,7 @@ export default function SignUp() {
 const postDate=async(e)=>{
   e.preventDefault();
   
-  const {name,roll_no,email,phone,smester,cgpa,skill_1,skill_2,skill_3,website,education_10th,education_12th,about}=user;
+  const {photo_link,name,roll_no,email,phone,smester,cgpa,skill_1,skill_2,skill_3,website,education_10th,education_12th,about}=user;
 
   const res=await fetch("https://softwareproject-1-j7593157.deta.app/register",{
   method: 'POST',
@@ -28,12 +28,12 @@ const postDate=async(e)=>{
       'Content-Type': 'application/json',
       
   },
-  body: JSON.stringify({name,roll_no,email,phone,smester,cgpa,skill_1,skill_2,skill_3,website,education_10th,education_12th,about })
+  body: JSON.stringify({photo_link,name,roll_no,email,phone,smester,cgpa,skill_1,skill_2,skill_3,website,education_10th,education_12th,about })
 });
 
 const data=await res.json();
 
-if(data.status===422 || !data){
+if( !data){
 window.alert("invalid registraion");
 console.log("invalid registraion");
 }
@@ -62,6 +62,16 @@ else{
               <div className="app-title">
                 <span>Registration</span>
                 <span>FORM</span>
+              </div>
+              <div className="upload_title">
+
+              <input className="app-form-control" placeholder="photo drive link"
+                    type="text"
+                    name="photo_link" id="photo_link"
+                    value={user.photo_link}
+                    onChange={handleInput} 
+                  />
+                
               </div>
               
             </div>
@@ -173,7 +183,7 @@ else{
                   />
                 </div>
                 <div className="app-form-group message">
-                  <input className="app-form-control" placeholder="education_12th" 
+                  <input className="app-form-control" placeholder="about" 
                     type="text"
                     name="education_12th" id="education_12th"
                     value={user.education_12th}
